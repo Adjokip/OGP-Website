@@ -1,0 +1,13 @@
+{
+    "pure-ftpd_accounts_for_remote_server_named": "FTP accounts for remote server named %s",
+    "ftp_address": "FTP address: %s:%s",
+    "change_account_details": "Change account details",
+    "remove_account": "Delete account",
+    "ftp_account_already_exists": "This FTP account already exists.",
+    "full_path": "Home directory",
+    "add_ftp_account": "Add FTP account",
+    "remote_server": "Remote server",
+    "server_name": "Server name",
+    "ftp_account_username_too_long": "FTP username is too long. Try a shorter username no longer than 20 characters.",
+    "ftp_account_password_too_long": "FTP password is too long. Try a shorter password no longer than 20 characters."
+}

@@ -1,0 +1,20 @@
+{
+    "update.php": "'update.php'",
+    "unable_download": "Unable to download %s.",
+    "md5_failed": "MD5 test failed for %s, try again.",
+    "uninstall": "Uninstall",
+    "install": "Install",
+    "uptodate": "Up-to-date",
+    "update_available": "Update available",
+    "not_installed": "Not installed",
+    "installed": "Installed",
+    "download_update": "Download\/Update",
+    "are_you_sure": "Are you sure",
+    "uninstalling_module_dataloss": "By uninstalling a module you will lose all data related to it.",
+    "remove_files_for": "Would you like to remove all files for",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "extra_themes": "Extra themes",
+    "extra_modules": "Extra modules",
+    "search_for_updates": "Check for updates"
+}

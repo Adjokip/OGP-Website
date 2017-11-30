@@ -24,10 +24,13 @@
 
 function print_player_list($player_list,$players,$playersmax,$gamename)
 {
+	global $Localization;
+	$Localization->get('dashboard');
+
     $data = "<center><table class='currently-online' >".
 			"<tr><td style='text-align:left;'>".
 			$gamename." [".$players.'/'.$playersmax."] ".
-			get_lang('players').":</td>\n</tr>";
+			$Localization->translate('dashboard.players').":</td>\n</tr>";
 	foreach( $player_list as $player )
 	{
 		$data .= "<tr><td style='text-align:center;color:#".rand(0,5).rand(0,5).rand(0,5).";' >".$player['name']."</td></tr>";
@@ -38,6 +41,9 @@ function print_player_list($player_list,$players,$playersmax,$gamename)
 
 function exec_ogp_module() 
 {
+	global $Localization;
+	$Localization->get('dashboard');
+
 	$server_key = 'server_'.$_GET['ip'].'_'.$_GET['port'];
 	if(isset($_GET['show']) and $_GET['show'] == "players")
 	{
@@ -50,7 +56,7 @@ function exec_ogp_module()
 	if(isset($_GET['show']) and $_GET['show'] == "player_statistics")
 	{
 		//if($_SESSION['player_statistics']['playersmax'] > 0)
-			echo $_SESSION['player_statistics']['players'] . "/" . $_SESSION['player_statistics']['playersmax']. " "  . players;
+			echo $_SESSION['player_statistics']['players'] . "/" . $_SESSION['player_statistics']['playersmax']. " "  . $Localization->translate('dashboard.players');
 		return;
 	}
 	global $db;

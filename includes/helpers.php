@@ -32,10 +32,22 @@ if( isset($_REQUEST['p']) and ( !isset($_REQUEST['m']) or !preg_match("/^([a-z]|
 	unset($_POST['p'], $_GET['p'], $_REQUEST['p']);
 }
 
-if(file_exists(__DIR__ . "/lang.php")){
-	require_once(__DIR__ . "/lang.php");
-}else{
-	require_once("lang.php");
+function get_lang($str){
+	$x = Localization::getInstance();
+
+	return $x->translate('global.' . $str);
+}
+
+function get_lang_f($str, $arr){
+	$x = Localization::getInstance();
+
+	return $x->translate('global.' . $str, $arr);
+}
+
+function print_lang($str){
+	$x = Localization::getInstance();
+
+	echo $x->translate('global.' . $str);
 }
 
 

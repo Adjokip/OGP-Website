@@ -1,0 +1,21 @@
+{
+    "recover": "Recover a forgotten password",
+    "back": "Back",
+    "incomplete": "Please go back and complete all the fields in the form.",
+    "subject": "Password request",
+    "password_message": "Hello,<br><br>Your password has been successfully reseted.<br><br>New Password: %s<br><br>Remember to change your password often.<br><br>Please do not reply to this email!<br><br>______________________________<br>OGP Mailer",
+    "send": "Your password has been sent! Please check your email!",
+    "here": "Here",
+    "to_login": "to login",
+    "errormail": "Your email address is not correct.",
+    "submit": "Submit",
+    "click": "Click",
+    "mail_settings_missing": "Panel mail settings are not complete so it can not send your password. Contact your OGP admin.",
+    "mail_failed": "Failed to send email.",
+    "email": "Email",
+    "enter_email": "Please enter your email address",
+    "webmaster": "Webmaster",
+    "confirm_send": "For security reasons we have sent you a confirmation link before you restart your password.<br><b style='color:red;'>Please check your inbox.<\/b>",
+    "confirm_change_subject": "Password reset, confirmation email",
+    "confirm_change_password_message": "Hello,<br><br>Please click on the link below to reset your password:<br><br>%s<br><br>Note: If you do not have requested the reset of your password, you can ignore this email.<br><br>Please do not reply to this email!<br><br>______________________________<br>OGP Mailer"
+}

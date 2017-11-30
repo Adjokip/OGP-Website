@@ -25,7 +25,13 @@
 require_once("includes/functions.php");
 require_once("includes/helpers.php");
 require_once("includes/html_functions.php");
+
 startSession();
+
+require 'includes/Localization.php';
+
+$language = $_SESSION['users_lang'] ?: 'English';
+$Localization = new Localization($language);
 
 // Report all PHP errors
 error_reporting(E_ERROR);
@@ -41,12 +47,8 @@ require_once CONFIG_FILE;
 // Connect to the database server and select database.
 $db = createDatabaseConnection($db_type, $db_host, $db_user, $db_pass, $db_name, $table_prefix);
 
-// Load languages.
-include_once("includes/lang.php");
-
 if (!$db instanceof OGPDatabase) {
-	ogpLang();
-	die(get_lang('no_db_connection'));
+	die ($Localization->translate('global.no_db_connection'));
 }
 
 // Logged in user settings - access this global variable where needed
@@ -56,12 +58,13 @@ if(hasValue($_SESSION['user_id'])){
 
 $settings = $db->getSettings();
 @$GLOBALS['panel_language'] = $settings['panel_language'];
-ogpLang();
 
 require_once("includes/view.php");
+
 $view = new OGPView();
-$view->setCharset(get_lang('lang_charset'));
+$view->setCharset($Localization->translate('global.lang_charset'));
 $view->setTimeZone($settings['time_zone']);
+
 if(isset($_GET['type']) && $_GET['type'] == 'cleared')
 {
 	if(isset($_GET['data_type'])){
@@ -80,19 +83,20 @@ else
 
 function heading()
 {
-	global $db,$view,$settings;
+	global $db, $view, $settings;
+	global $Localization;
 	
-	if ( !file_exists(CONFIG_FILE) )
+	if ( ! file_exists(CONFIG_FILE) )
     {
-        print_failure(get_lang('failed_to_read_config'));
+        print_failure($Localization->translate('global.failed_to_read_config'));
         $view->refresh("index.php");
         return;
     }
     // Start Output Buffering
     if (!isset($_SESSION['users_login']))
     {
-        print_failure(get_lang('invalid_login_information'));
-		echo "<p class='note' style='color:red;'>".get_lang('invalid_redirect')."...</p>";
+        print_failure($Localization->translate('global.invalid_login_information'));
+		echo "<p class='note' style='color:red;'>".$Localization->translate('global.invalid_redirect')."...</p>";
 		$view->refresh("index.php", 2);
         return;
     }   
@@ -107,8 +111,8 @@ function heading()
 
  			if($minutes2expire <= 0)
 			{
-				echo "<h1>".get_lang('account_expired')."</h1>";
-				echo "<p class='note'>".get_lang('contact_admin_to_enable_account')."</p>";
+				echo "<h1>".$Localization->translate('global.account_expired')."</h1>";
+				echo "<p class='note'>".$Localization->translate('global.contact_admin_to_enable_account')."</p>";
 				session_destroy();
 				return;
 			}
@@ -121,7 +125,7 @@ function heading()
 				echo "<h2>".$settings['maintenance_title']."</h2>";
 				echo "<p>".$settings['maintenance_message']."</p>";
 				$view->setTitle("OGP: Maintenance.");
-				echo "<p class='failure'>".get_lang('logging_out_10')."...</p>";
+				echo "<p class='failure'>".$Localization->translate('global.logging_out_10')."...</p>";
 				$view->refresh("index.php", 10);
 				session_destroy();
 				return;
@@ -130,7 +134,7 @@ function heading()
 		if ( isset($_REQUEST['logout']) )
 		{
 			session_destroy();
-			print_success(get_lang('logout_message'));
+			print_success($Localization->translate('global.logout_message'));
 			$view->refresh("index.php");
 			return;
 		}
@@ -141,7 +145,8 @@ function heading()
 
 function ogpHome()
 {
-    global $db,$view,$settings;
+    global $db, $view, $settings;
+    global $Localization;
 	?>
 	%top%
 	<?php
@@ -231,13 +236,13 @@ function ogpHome()
 				}
 				$button_url = "?m=".$module.$subpage;
 				
-				if ( preg_match( '/\\_?\\_/', get_lang("$button") ) )
+				if ( preg_match( '/\\_?\\_/', $Localization->translate('global.' . $button) ) )
 				{
 					$button_name = $menu['menu_name'];
 				}
 				else
 				{
-					$button_name = get_lang("$button");
+					$button_name = $Localization->translate('global.' . $button);
 				}
 				
 				echo "<li><a class='".$menu_link_class."' href='".$button_url."'><span class='$button'>".$button_name."</span></a>";
@@ -258,7 +263,7 @@ function ogpHome()
 					else
 						$name[$key]  = $row['module'];
 												
-					$translation[$key] = get_lang($name[$key]);
+					$translation[$key] = $Localization->translate('global.' . $name[$key]);
 				}
 				array_multisort($translation, $name, SORT_DESC, $menus);
 				
@@ -286,13 +291,13 @@ function ogpHome()
 							$TotalSelected = true;
 					$button_url = "?m=".$module.$subpage;
 					
-					if ( preg_match( '/\\_?\\_/', get_lang("$button") ) )
+					if ( preg_match( '/\\_?\\_/', $Localization->translate('global.' . $button) ) )
 					{
 						$button_name = $menu['menu_name'];
 					}
 					else
 					{
-						$button_name = get_lang("$button");
+						$button_name = $Localization->translate('global.' . $button);
 					}
 					
 					$data .= "<li><a class='".$menu_link_class."' href='".$button_url."'><span class='$button'>".$button_name."</span></a></li>\n";
@@ -302,7 +307,7 @@ function ogpHome()
 				<?php 
 				if ((isset($_GET['m']) AND $_GET['m'] == "administration") || $TotalSelected )
 					echo 'class="admin_menu_link_selected"'; else echo 'class="admin_menu_link"';
-				?> target="_self" ><span class="administration" ><?php echo get_lang('administration'); ?></span></a>
+				?> target="_self" ><span class="administration" ><?php echo $Localization->translate('global.administration'); ?></span></a>
 				<ul id="administration" >
 					<?php echo $data ?>
 				</ul>
@@ -323,15 +328,15 @@ function ogpHome()
 					{
 						if($db->isModuleInstalled("subusers")){
 					?>
-						<li><a href="?m=subusers&p=submanage"><span class="subusers"><?php print_lang('sub_users'); ?></span></a></li>
+						<li><a href="?m=subusers&p=submanage"><span class="subusers"><?php echo $Localization->translate('global.sub_users'); ?></span></a></li>
 					<?php
 						}
 					?>
-						<li><a href="?m=user_admin&p=show_groups"><span class="groups"><?php print_lang('show_groups'); ?></span></a></li>
+						<li><a href="?m=user_admin&p=show_groups"><span class="groups"><?php echo $Localization->translate('global.show_groups'); ?></span></a></li>
 					<?php
 					}
 					?>
-						<li><a href="?logout"><span class="logout">[<?php print_lang('logout'); ?>]</span></a></li>
+						<li><a href="?logout"><span class="logout">[<?php echo $Localization->translate('global.logout'); ?>]</span></a></li>
 					</ul>
 				</li>
 			<?php

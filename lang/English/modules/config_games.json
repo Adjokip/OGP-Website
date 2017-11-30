@@ -1,0 +1,20 @@
+{
+    "resetting_configs": "Resetting all configs",
+    "updating_configs": "Updating old configs.",
+    "configs_updated_ok": "Configurations reread successfully.",
+    "reset_old_configs": "Reset old configs",
+    "update_configs": "Update Configs",
+    "game_config_setup": "Setup Game Configs",
+    "config_reset_warning": "When you clear old configs there might be issues with the assigned game servers, because the identification numbers might not match with the new configurations.",
+    "modify_configs_info": "If you want to modify the game configuration, you can modify the files located in %s.",
+    "updating_config_from_file": "Updating config from %s file.",
+    "error_when_handling_file": "Error occurred when handling file %s.",
+    "error_while_adding_cfg_to_db": "Error occurred when adding data from %s to database.",
+    "no_configs_found": "No configuration found from %s file.",
+    "select_game": "Select Game",
+    "create_xml_configs": "Create XML Configs",
+    "failed_to_delete_config_from_db": "Failed to delete %s config from database",
+    "failed_removing_file": "Falied removing the file %s.",
+    "removed_game_cfg_from_disk_and_datbase": "Removed config for %s from storage and database.",
+    "delete_game_config_for": "Delete game configuration for %s from disk and database."
+}

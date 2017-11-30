@@ -26,10 +26,12 @@
 
 require('includes/lib_remote.php');
 
-
 function exec_ogp_module() 
 {
 	global $db, $settings, $loggedInUserInfo;
+	global $Localization;
+
+	$Localization->get('dashboard');
 	
 	$isAdmin = $db->isAdmin($_SESSION['user_id']);
 
@@ -51,7 +53,7 @@ function exec_ogp_module()
 		}
 	}
 
-	$OnlineServersTitle .= get_lang('online_servers');
+	$OnlineServersTitle .= $Localization->translate('dashboard.online_servers');
 	$player_list = "";
 	
 	if ( $isAdmin )
@@ -61,7 +63,7 @@ function exec_ogp_module()
 	else
 	{
 		$OnlineServersTitle = "Open Game Panel";
-		$OnlineServers .= "<p>" . get_lang("welcome_text") . "</p><br><b>".get_lang('online_servers').":</b><br><br>";
+		$OnlineServers .= "<p>" . $Localization->translate('dashboard.welcome_text') . "</p><br><b>".$Localization->translate('dashboard.online_servers').":</b><br><br>";
 		$server_homes = $db->getIpPortsForUser_limit($_SESSION['user_id'],$page_user,$limit_user);
 	}
 
@@ -70,9 +72,9 @@ function exec_ogp_module()
 	
 	if ( !$server_homes )
 	{
-		$OnlineServers .= "<p class='failure'>".get_lang('no_games_to_monitor')."</p>";
+		$OnlineServers .= "<p class='failure'>".$Localization->translate('dashboard.no_games_to_monitor')."</p>";
 		if ( $isAdmin )
-			$OnlineServers .= "<p class='note'>".get_lang_f("add_games_in","<a href='?m=user_games&amp;p=add'>".get_lang('game_servers')."</a>")."</p>";
+			$OnlineServers .= "<p class='note'>".$Localization->translate('dashboard.add_games_in', array('<a href="?m=user_games&amp;p=add">'.$Localization->translate('dashboard.game_servers').'</a>'))."</p>";
 	}
 	else
 	{
@@ -91,7 +93,7 @@ function exec_ogp_module()
 				$remote = new OGPRemoteLibrary( $server_home['agent_ip'], $server_home['agent_port'],
 												$server_home['encryption_key'], $server_home['timeout'] );
 				// Check if the screen running the server is running.
-				if( $remote->is_screen_running(OGP_SCREEN_TYPE_HOME,$server_home['home_id']) === 1 )
+				if( $remote->is_screen_running(OGP_SCREEN_TYPE_HOME, $server_home['home_id']) === 1 )
 				{
 					$stats_servers_online++;
 					$server_key = 'server_'.$server_home['ip'].'_'.$server_home['port'];
@@ -174,9 +176,9 @@ function exec_ogp_module()
 				}
 			}
 			$OnlineServers .= "</table>";
-			$OnlineServers .= "<center>".get_lang('statistics').
+			$OnlineServers .= "<center>".$Localization->translate('dashboard.statistics').
 							  ":<br>$stats_servers_online/$stats_servers ".
-							  get_lang('online_servers')."</center>";
+							  $Localization->translate('dashboard.online_servers')."</center>";
 		}
 	}
 	?>
@@ -188,27 +190,27 @@ function exec_ogp_module()
 	$content = array();
 	$href = array();
 	// Game Monitor
-	$title[1] = get_lang('game_monitor');
-	$content[1] = '<img src="themes/' . $settings['theme'] . '/images/icons/game_monitor.png" style="width:48px;float:right;margin:0 0 0 8px" />' . get_lang('dashboard_game_monitor_text');
+	$title[1] = $Localization->translate('global.game_monitor');
+	$content[1] = '<img src="themes/' . $settings['theme'] . '/images/icons/game_monitor.png" style="width:48px;float:right;margin:0 0 0 8px" />' . $Localization->translate('dashboard.dashboard_game_monitor_text');
 	$href[1] = 'home.php?m=gamemanager&p=game_monitor';
 	// Online Server
 	$title[2] = $OnlineServersTitle;
 	$content[2] = $OnlineServers;
 	$href[2] = null;
 	// Currently Online
-	$title[3] = get_lang('currently_online');
+	$title[3] = $Localization->translate('dashboard.currently_online');
 	$content[3] = $player_list; 
 	$href[3] = null;
 	// FTP
-	$title[4] = get_lang('ftp');
-	$content[4] = '<img src="themes/' . $settings['theme'] . '/images/icons/folder.png" style="width:48px;float:right;margin:0 0 0 8px" />' . get_lang('dashboard_ftp_text');
+	$title[4] = $Localization->translate('global.ftp');
+	$content[4] = '<img src="themes/' . $settings['theme'] . '/images/icons/folder.png" style="width:48px;float:right;margin:0 0 0 8px" />' . $Localization->translate('dashboard.dashboard_ftp_text');
 	$href[4] = 'home.php?m=ftp';
 	// Support
 	$title[5] = (isset($settings['support_widget_title']) && $settings['support_widget_title'] != "") ?
-				 $settings['support_widget_title'] : get_lang('support');
+				 $settings['support_widget_title'] : $Localization->translate('global.support');
 	$content[5] = (isset($settings['support_widget_content']) && $settings['support_widget_content'] != "") ?
 				   $settings['support_widget_content'] : '<img src="themes/' . $settings['theme'] .
-				   '/images/icons/support.png" style="width:48px;float:right;margin:0 0 0 8px" />' . get_lang('dashboard_support_text');
+				   '/images/icons/support.png" style="width:48px;float:right;margin:0 0 0 8px" />' . $Localization->translate('dashboard.dashboard_support_text');
 	$href[5] = (isset($settings['support_widget_link']) && $settings['support_widget_link'] != "") ?
 				$settings['support_widget_link'] : 'http://www.opengamepanel.org/forum';
 
@@ -257,12 +259,12 @@ function exec_ogp_module()
 	}
 	if( $isAdmin AND $db->isModuleInstalled('status') )
 	{
-		echo "<h0>".get_lang('server_status')."</h0><br>";
+		echo "<h0>".$Localization->translate('dashboard.server_status')."</h0><br>";
 		$servers = $db->getRemoteServers();
 		
 		echo "<div id='column4' style='float:left;width:40%;' >
 			   <div class='bloc rounded' >
-			   <h4>".get_lang('select_remote_server')."</h4>
+			   <h4>".$Localization->translate('dashboard.select_remote_server')."</h4>
 				<div>
 				<br>
 				<center>

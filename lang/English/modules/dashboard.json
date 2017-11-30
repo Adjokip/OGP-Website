@@ -1,0 +1,20 @@
+{
+    "dashboard_ftp_text": "The FTP client can compress files and send them via email, can uncompress too, edit text files and much more.",
+    "dashboard_addons_manager_text": "Manage all different types of services with OGP. Choose from over 115 servers, which supplied directly by OGP.",
+    "dashboard_game_monitor_text": "Watch and monitor your traffic & logs quickly. You can see what servers are up and down.",
+    "dashboard_support_text": "Get support from the OGP Professional Team on the forum. Fast response and great attention.",
+    "welcome_text": "Welcome to the Open Game Panel (OGP). OGP is an open-source software, that allows you to install, start and monitor different game servers.",
+    "any_server_is_online": "Any server is Online",
+    "current_map": "Current Map",
+    "server_ip_port": "IP:Port",
+    "statistics": "Statistics",
+    "servers": "Servers",
+    "players": "Players",
+    "server_status": "Server Status",
+    "no_games_to_monitor": "There are currently no online\/offline game servers",
+    "online_servers": "Online Servers",
+    "add_games_in": "If you want to add games you can do it in %s",
+    "currently_online": "Currently Online",
+    "game_servers": "Game Servers",
+    "select_remote_server": "Select remote server"
+}
